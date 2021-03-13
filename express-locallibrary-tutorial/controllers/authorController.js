@@ -1,29 +1,33 @@
 var Author = require('../models/author');
 
-//Display list of authors
+// Display list of all Authors.
 exports.author_list = function(req, res) {
     res.send('NOT IMPLEMENTED: Author list');
-}
+};
 
-//Display Author create form on GET
+// Display detail page for a specific Author.
+exports.author_detail = function(req, res) {
+    res.send('NOT IMPLEMENTED: Author detail: ' + req.params.id);
+};
+
+// Display Author create form on GET.
 exports.author_create_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Author create GET');
 };
 
-//Handle Author CREATE on POST
-exports.author_create_post = fucntion(req, res) {
+// Handle Author create on POST.
+exports.author_create_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Author create POST');
-}
+};
 
-//Display Author Delete form on GET
-exports.author_delete_get = fucntion(req, res) {
+// Display Author delete form on GET.
+exports.author_delete_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Author delete GET');
 };
 
-//Handle Author delete on POST
-
+// Handle Author delete on POST.
 exports.author_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Autor delete POST');
+    res.send('NOT IMPLEMENTED: Author delete POST');
 };
 
 // Display Author update form on GET.
