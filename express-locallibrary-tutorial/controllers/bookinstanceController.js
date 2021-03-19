@@ -52,9 +52,9 @@ exports.bookinstance_create_post = [
 
 
     (req, res, next) => {
-        const errors = ValidationResult(req);
+        const errors = validationResult(req);
 
-        var bookInstance = new BookInstance({
+        var bookinstance = new BookInstance({
             book: req.body.book,
             imprint: req.body.imprint,
             status: req.body.status,
@@ -66,14 +66,16 @@ exports.bookinstance_create_post = [
             .exec(function(err, books) {
                 if(err) {return next(err);}
 
-                res.render('bookinstance_form', {title: 'Create BookInstance', book_list: books, selected_book:bookinstance.book._id, errors: errors.array(), bookinstance: bookinstance });
+                res.render('bookinstance_form', { title: 'Create BookInstance', book_list: books, selected_book: bookinstance.book._id , errors: errors.array(), bookinstance: bookinstance });
 
             });
             return;
         }
         else {
-            bookinstance.save(function(err){
-                res.redirect(bookinstance.url);
+            bookinstance.save(function (err) {
+                if (err) { return next(err); }
+                   // Successful - redirect to new record.
+                   res.redirect(bookinstance.url);
             })
         }
     }
