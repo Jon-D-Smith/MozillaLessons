@@ -3,6 +3,7 @@ var async = require('async');
 var Book = require('../models/book');
 
 const { body,validationResult } = require('express-validator');
+const { findById } = require('../models/book');
 
 // Display list of all Authors.
 exports.author_list = function(req, res, next) {
@@ -98,8 +99,28 @@ exports.author_delete_get = function(req, res, next) {
 };
 
 // Handle Author delete on POST.
-exports.author_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: Author delete POST');
+exports.author_delete_post = function(req, res, next) {
+    async.parallel({
+        author: function(callback) {
+            Author.findById(req.body.authorid).exec(callback)
+        },
+        authors_books : function(callback){
+            Book.find({'author': req.body.authorid }).exec(callback)
+        }, 
+    }, function(err, results) {
+        if(err){return next(err);}
+
+        if(results.authors_books.length > 0) {
+            res.render('author_delete', {title: 'Delete Author', author: results.author, author_books: result.authors_books});
+            return;
+        }
+        else {
+            Author.findByIdAndRemove(req.body.authorid, function deleteAuthor(err){
+                res.redirect('/catalog/authors')
+            })
+        }
+    }
+    )
 };
 
 // Display Author update form on GET.
