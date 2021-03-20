@@ -1,8 +1,9 @@
 extends layout 
 
 block content 
-    h1 #{title}:  author.name
-    p= author.lifespan 
+    h1 #{title}:  #{author.name}
+    if author.date_of_birth_formatted!= '' && author.date_of_death_formatted!= ''
+        p= author.lifespan 
 
     if author_books.length 
 
